@@ -1,0 +1,79 @@
+[
+  {
+    "id": 1,
+    "title": "EcoTrack",
+    "domain": "Sustainability",
+    "teamLead": "Akhil Raj",
+    "abstract": "An intelligent platform that helps campuses monitor and reduce their carbon footprint through real-time sustainability analytics.",
+    "teamSize": 4,
+    "status": "Prototype",
+    "likes": 24,
+    "pitchDeckLink": "https://example.com/ecotrack"
+  },
+  {
+    "id": 2,
+    "title": "EduBridge",
+    "domain": "EdTech",
+    "teamLead": "Ananya Menon",
+    "abstract": "A peer learning platform connecting students with mentors and collaborative study resources.",
+    "teamSize": 5,
+    "status": "Ideation",
+    "likes": 31,
+    "pitchDeckLink": "https://example.com/edubridge"
+  },
+  {
+    "id": 3,
+    "title": "FinVault",
+    "domain": "FinTech",
+    "teamLead": "Rahul Kumar",
+    "abstract": "A financial literacy application designed to help students understand budgeting, savings and personal finance.",
+    "teamSize": 3,
+    "status": "Prototype",
+    "likes": 18,
+    "pitchDeckLink": "https://example.com/finvault"
+  },
+  {
+    "id": 4,
+    "title": "MediAI",
+    "domain": "AI",
+    "teamLead": "Fathima N",
+    "abstract": "An AI-assisted health information platform that helps users understand symptoms and find relevant healthcare resources.",
+    "teamSize": 4,
+    "status": "Seed Funded",
+    "likes": 42,
+    "pitchDeckLink": "https://example.com/mediai"
+  },
+  {
+    "id": 5,
+    "title": "AgroVision",
+    "domain": "AgriTech",
+    "teamLead": "Vishnu Prasad",
+    "abstract": "A computer vision based crop monitoring solution that helps farmers identify plant diseases at an early stage.",
+    "teamSize": 5,
+    "status": "Prototype",
+    "likes": 27,
+    "pitchDeckLink": "https://example.com/agrovision"
+  },
+  {
+    "id": 6,
+    "title": "CampusConnect",
+    "domain": "IoT",
+    "teamLead": "Nihal Ahmed",
+    "abstract": "A smart campus platform connecting students, clubs, events and IoT-enabled campus services in one place.",
+    "teamSize": 6,
+    "status": "Ideation",
+    "likes": 35,
+    "pitchDeckLink": "https://example.com/campusconnect"
+  },
+  {
+    "id": 7,
+    "title": "AI Phishing",
+    "domain": "AI",
+    "teamLead": "Fayas",
+    "abstract": "it is a cyber security based project",
+    "pitchDeckLink": "https://ai_phising/",
+    "teamSize": 1,
+    "status": "Ideation",
+    "likes": 0
+  }
+]
