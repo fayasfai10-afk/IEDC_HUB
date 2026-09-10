@@ -1,76 +1,30 @@
-import { useState } from "react";
-import { Menu, X, Lightbulb } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+
+const links = [["Home", "home"], ["Explore Ideas", "ideas"], ["How It Works", "how-it-works"], ["Submit Pitch", "submit"]];
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const links = [
-    { name: "Home", href: "#home" },
-    { name: "Ideas", href: "#ideas" },
-    { name: "Submit", href: "#submit" },
-  ];
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-
-        <a
-          href="#home"
-          className="flex items-center gap-2 text-xl font-bold"
-        >
-          <span className="rounded-xl bg-indigo-500 p-2">
-            <Lightbulb size={20} />
-          </span>
-
-          <span>
-            IEDC
-            <span className="text-indigo-400"> Hub</span>
-          </span>
+    <header className={`fixed inset-x-0 top-0 z-50 transition ${scrolled ? "border-b border-line bg-white/95 shadow-sm backdrop-blur" : "bg-warm/90"}`}>
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+        <a href="#home" className="flex items-center gap-3 text-navy" onClick={() => setOpen(false)}>
+          <span className="grid h-9 w-9 place-items-center bg-navy text-sm font-black text-white">I</span>
+          <span className="leading-tight"><strong className="block text-sm font-extrabold tracking-wide">IEDC</strong><span className="block text-xs text-muted">Innovation Hub</span></span>
         </a>
-
-        <div className="hidden items-center gap-8 md:flex">
-          {links.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm text-slate-300 transition hover:text-white"
-            >
-              {link.name}
-            </a>
-          ))}
-
-          <a
-            href="#submit"
-            className="rounded-xl bg-indigo-500 px-5 py-2.5 text-sm font-semibold transition hover:bg-indigo-400"
-          >
-            Submit Idea
-          </a>
-        </div>
-
-        <button
-          className="md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          {mobileOpen ? <X /> : <Menu />}
-        </button>
-      </div>
-
-      {mobileOpen && (
-        <div className="border-t border-white/10 bg-slate-950 px-6 py-5 md:hidden">
-          <div className="flex flex-col gap-5">
-            {links.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="text-slate-300 hover:text-white"
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
-    </nav>
+        <div className="hidden items-center gap-7 lg:flex">{links.map(([label, href]) => <a key={href} href={`#${href}`} className="text-sm font-semibold text-muted transition hover:text-teal-brand">{label}</a>)}</div>
+        <a href="#submit" className="hidden items-center gap-2 bg-teal-brand px-4 py-2.5 text-sm font-bold text-white transition hover:bg-navy sm:inline-flex">Submit Your Idea <ArrowUpRight size={16} /></a>
+        <button className="grid h-10 w-10 place-items-center text-navy lg:hidden" onClick={() => setOpen((value) => !value)} aria-label={open ? "Close menu" : "Open menu"}>{open ? <X /> : <Menu />}</button>
+      </nav>
+      {open && <div className="border-t border-line bg-white px-5 py-4 lg:hidden">{links.map(([label, href]) => <a key={href} href={`#${href}`} onClick={() => setOpen(false)} className="block border-b border-line py-3 text-sm font-semibold text-navy">{label}</a>)}<a href="#submit" onClick={() => setOpen(false)} className="mt-4 block bg-teal-brand px-4 py-3 text-center text-sm font-bold text-white">Submit Your Idea</a></div>}
+    </header>
   );
 }

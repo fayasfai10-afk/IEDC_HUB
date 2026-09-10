@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+@theme {
+  --color-navy: #0b1f33;
+  --color-navy-deep: #081524;
+  --color-teal-brand: #0f766e;
+  --color-teal-dark: #0b5c56;
+  --color-amber-brand: #f59e0b;
+  --color-warm: #f7f8f5;
+  --color-ink: #172033;
+  --color-muted: #64748b;
+  --color-line: #e2e8f0;
+  --font-sans: "Manrope", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -7,10 +20,27 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background: #020617;
-  color: #f8fafc;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  background: #f7f8f5;
+  color: #172033;
+  font-family: "Manrope", "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.section-label {
+  color: #0f766e;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  color: #0b1f33;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
 }
 
 * {
@@ -22,4 +52,146 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+::selection {
+  background: rgba(15, 118, 110, 0.15);
+}
+
+/* ---------- Reveal-on-scroll system ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Hero entrance ---------- */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  opacity: 0;
+  animation: rise-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
+/* ---------- Like micro-animation ---------- */
+
+@keyframes heart-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+.heart-pop {
+  animation: heart-pop 0.35s ease-out;
+}
+
+/* ---------- Success checkmark ---------- */
+
+@keyframes draw-check {
+  from { stroke-dashoffset: 48; }
+  to { stroke-dashoffset: 0; }
+}
+
+.check-draw {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: draw-check 0.5s ease-out 0.15s forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fade-in 0.4s ease-out both;
+}
+
+/* ---------- Subtle hero grid texture ---------- */
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(11, 31, 51, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 31, 51, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.hero-mark {
+  position: absolute;
+  right: 2rem;
+  top: 8rem;
+  color: rgba(15, 118, 110, 0.18);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  writing-mode: vertical-rl;
+}
+
+.hero-signal {
+  animation: signal-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.42s both;
+}
+
+@keyframes signal-in {
+  from { opacity: 0; transform: translateY(22px) rotate(1deg); }
+  to { opacity: 1; transform: translateY(0) rotate(0); }
+}
+
+/* ---------- Spinner ---------- */
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 0.7s linear infinite;
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .rise {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .hero-signal {
+    animation: none !important;
+  }
+
+  .heart-pop,
+  .check-draw,
+  .fade-in,
+  .spinner {
+    animation: none !important;
+  }
+
+  .check-draw {
+    stroke-dashoffset: 0;
+  }
 }

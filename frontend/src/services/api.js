@@ -1,4 +1,13 @@
-const API_URL = "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
+async function getErrorMessage(response, fallback) {
+  try {
+    const data = await response.json();
+    return data.message || fallback;
+  } catch {
+    return fallback;
+  }
+}
 
 export async function getProjects(filters = {}) {
   const params = new URLSearchParams();
@@ -18,7 +27,7 @@ export async function getProjects(filters = {}) {
   );
 
   if (!response.ok) {
-    throw new Error("Failed to fetch projects");
+    throw new Error(await getErrorMessage(response, "Failed to fetch projects"));
   }
 
   return response.json();

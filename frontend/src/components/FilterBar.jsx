@@ -8,9 +8,9 @@ export default function FilterBar({
   setCategory,
 }) {
   return (
-    <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div className="mb-10 flex flex-col gap-6">
 
-      <div className="relative w-full lg:max-w-md">
+      <div className="relative w-full max-w-xl">
         <Search
           size={18}
           className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
@@ -21,18 +21,19 @@ export default function FilterBar({
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search startup ideas..."
-          className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-11 pr-4 text-sm outline-none transition placeholder:text-slate-600 focus:border-indigo-400/50"
+          aria-label="Search ideas"
+          className="w-full border-b-2 border-line bg-transparent py-3 pl-10 pr-4 text-sm outline-none transition placeholder:text-muted focus:border-teal-brand"
         />
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-2">
+      <div className="flex gap-6 overflow-x-auto border-b border-line pb-0">
         {categories.map((item) => (
           <button
             key={item}
             onClick={() => setCategory(item)}
-            className={`whitespace-nowrap rounded-xl px-4 py-2.5 text-sm transition ${category === item
-                ? "bg-indigo-500 text-white"
-                : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
+            className={`relative whitespace-nowrap pb-3 text-sm font-semibold transition ${category === item
+              ? "text-teal-brand after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-teal-brand"
+              : "text-muted hover:text-navy"
               }`}
           >
             {item}

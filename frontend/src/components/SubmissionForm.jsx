@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Check, LoaderCircle } from "lucide-react";
 import { createProject } from "../services/api";
 
 const initialForm = {
@@ -9,7 +10,7 @@ const initialForm = {
   pitchDeckLink: "",
 };
 
-export default function SubmissionForm() {
+export default function SubmissionForm({ onProjectCreated }) {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("");
@@ -32,11 +33,11 @@ export default function SubmissionForm() {
     const newErrors = {};
 
     if (!form.founderName.trim()) {
-      newErrors.founderName = "Founder name is required";
+      newErrors.founderName = "Please enter your name.";
     }
 
     if (form.title.trim().length < 3) {
-      newErrors.title = "Startup title must be at least 3 characters";
+      newErrors.title = "Startup title must be at least 3 characters.";
     }
 
     if (!form.domain) {
@@ -45,18 +46,18 @@ export default function SubmissionForm() {
 
     if (form.abstract.trim().length < 20) {
       newErrors.abstract =
-        "Summary must contain at least 20 characters";
+        "Please provide a short project summary.";
     }
 
     if (!form.pitchDeckLink.trim()) {
       newErrors.pitchDeckLink =
-        "Pitch deck link is required";
+        "Please add a pitch deck link.";
     } else {
       try {
         new URL(form.pitchDeckLink);
       } catch {
         newErrors.pitchDeckLink =
-          "Enter a valid URL";
+          "Enter a valid pitch deck URL.";
       }
     }
 
@@ -78,13 +79,15 @@ export default function SubmissionForm() {
     try {
       setStatus("loading");
 
-      await createProject({
+      const createdProject = await createProject({
         title: form.title,
         domain: form.domain,
         teamLead: form.founderName,
         abstract: form.abstract,
         pitchDeckLink: form.pitchDeckLink,
       });
+
+      onProjectCreated(createdProject);
 
       setForm(initialForm);
       setErrors({});
@@ -98,7 +101,7 @@ export default function SubmissionForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+      className="border border-white/15 bg-white p-6 text-ink sm:p-8"
     >
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -130,7 +133,7 @@ export default function SubmissionForm() {
             name="domain"
             value={form.domain}
             onChange={handleChange}
-            className="w-full rounded-xl border border-white/10 bg-slate-900 px-4 py-3 text-sm outline-none focus:border-indigo-400/50"
+            className="w-full border border-line bg-white px-4 py-3 text-sm outline-none transition focus:border-teal-brand focus:ring-2 focus:ring-teal-brand/15"
           >
             <option value="">Select category</option>
             <option value="AI">AI</option>
@@ -173,7 +176,7 @@ export default function SubmissionForm() {
           onChange={handleChange}
           rows="5"
           placeholder="Describe your startup idea..."
-          className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none placeholder:text-slate-600 focus:border-indigo-400/50"
+          className="w-full resize-none border border-line bg-white px-4 py-3 text-sm outline-none transition placeholder:text-muted focus:border-teal-brand focus:ring-2 focus:ring-teal-brand/15"
         />
 
         {errors.abstract && (
@@ -186,21 +189,21 @@ export default function SubmissionForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="mt-6 w-full rounded-xl bg-indigo-500 px-5 py-3.5 font-semibold transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-50"
+        className="mt-6 inline-flex w-full items-center justify-center gap-2 bg-teal-brand px-5 py-3.5 font-semibold text-white transition hover:bg-navy disabled:cursor-not-allowed disabled:opacity-50"
       >
         {status === "loading"
-          ? "Submitting..."
+          ? <><LoaderCircle size={18} className="spinner" /> Submitting...</>
           : "Submit Pitch"}
       </button>
 
       {status === "success" && (
-        <p className="mt-4 rounded-xl bg-emerald-400/10 p-4 text-sm text-emerald-400">
-          Your startup pitch has been submitted successfully.
+        <p className="fade-in mt-4 flex items-start gap-3 border border-green-200 bg-green-50 p-4 text-sm text-green-800">
+          <Check size={18} /> <span><strong className="block">Pitch submitted successfully</strong>Your idea has been added to the IEDC Innovation Hub.</span>
         </p>
       )}
 
       {status && status !== "success" && status !== "loading" && (
-        <p className="mt-4 rounded-xl bg-red-400/10 p-4 text-sm text-red-400">
+        <p className="mt-4 border border-red-200 bg-red-50 p-4 text-sm text-red-700">
           {status}
         </p>
       )}
@@ -228,7 +231,7 @@ function Field({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none placeholder:text-slate-600 focus:border-indigo-400/50"
+        className="w-full border border-line bg-white px-4 py-3 text-sm outline-none transition placeholder:text-muted focus:border-teal-brand focus:ring-2 focus:ring-teal-brand/15"
       />
 
       {error && (

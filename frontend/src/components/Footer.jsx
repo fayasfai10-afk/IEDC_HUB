@@ -1,0 +1,5 @@
+import { ArrowUpRight } from "lucide-react";
+
+export default function Footer() {
+  return <footer className="bg-navy text-white"><div className="mx-auto flex max-w-7xl flex-col gap-10 px-5 py-12 sm:px-8 md:flex-row md:items-end md:justify-between"><div><div className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center bg-amber-brand font-black text-navy">I</span><strong>IEDC Innovation Hub</strong></div><p className="mt-4 max-w-xs text-sm leading-6 text-slate-300">Building the next generation of student innovators.</p></div><div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-slate-300"><a href="#home" className="hover:text-white">Home</a><a href="#ideas" className="hover:text-white">Explore</a><a href="#how-it-works" className="hover:text-white">How It Works</a><a href="#submit" className="inline-flex items-center gap-1 hover:text-white">Submit <ArrowUpRight size={14} /></a></div></div><div className="border-t border-white/15 px-5 py-5 text-center text-xs text-slate-400 sm:px-8">© 2026 IEDC Innovation Hub</div></footer>;
+}
